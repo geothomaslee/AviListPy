@@ -58,6 +58,20 @@ class Species():
         return self._data.items()
 
     def lookup_species_common_name(self, name: str, exact: bool=False):
+        """
+        Parameters
+        ----------
+        name : str
+            Species to search for.
+        exact : bool, optional
+            If True, will only search for the exact string in the data base. If False, will search
+            for any string containing name as a substring, and is not case sensitive. The default is False.
+
+        Returns
+        -------
+        _species_df : pandas.DataFrame
+           Pandas DataFrame with only one row containing the entry for the species.
+        """
         df = self.db.df
         if exact is True:
             _species_df = df[df['English_name_AviList'] == name]

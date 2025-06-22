@@ -50,6 +50,21 @@ class Subspecies():
         return self._data.items()
 
     def lookup_subspecies(self, name: str, exact: bool=False):
+        """
+        Parameters
+        ----------
+        name : str
+            Subspecies to search for.
+        exact : bool, optional
+            If True, will only search for the exact string in the data base. If False, will search
+            for any string containing name as a substring, and is not case sensitive. The default is False.
+
+        Returns
+        -------
+        _subspecies_df : pandas.DataFrame
+           Pandas DataFrame with only one row containing the entry for the subspecies.
+
+        """
         df = self.db.df
         if exact is True:
             _subspecies_df = df[df['Scientific_name'] == name]

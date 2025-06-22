@@ -52,6 +52,21 @@ class Family():
         return self._data.items()
 
     def lookup_family(self, name, exact: bool=False):
+        """
+        Parameters
+        ----------
+        name : str
+            Family to search for.
+        exact : bool, optional
+            If True, will only search for the exact string in the data base. If False, will search
+            for any string containing name as a substring, and is not case sensitive. The default is False.
+
+        Returns
+        -------
+        _family_df : pandas.DataFrame
+           Pandas DataFrame with only one row containing the entry for the family.
+
+        """
         df = self.db.df[self.db.df['Taxon_rank'].str.contains('family')]
         if exact is True:
             _family_df = df[df['Scientific_name'] == name]

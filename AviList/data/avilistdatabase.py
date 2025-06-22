@@ -45,10 +45,12 @@ class AviListDataBase():
                 verbose_print(f'Database loaded in {datetime.now() - start_time}')
 
     def load_df(self):
+        """Loads the AviList Excel file as a Pandas DataFrame"""
         with resources.files('AviList.data').joinpath('AviList-v2025-11Jun-extended.xlsx').open('rb') as f:
             return pd.read_excel(f)
 
     def _save(self, path=None):
+        """Pickles the AviListDataBase to the disk"""
         if path is None:
             raise ValueError('Must define path to save AviListDataBase.db to')
         try:

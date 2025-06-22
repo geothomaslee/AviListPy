@@ -50,6 +50,21 @@ class Order():
         return self._data.items()
 
     def lookup_order(self, name):
+        """
+        Parameters
+        ----------
+        name : str
+            Order to search for.
+        exact : bool, optional
+            If True, will only search for the exact string in the data base. If False, will search
+            for any string containing name as a substring, and is not case sensitive. The default is False.
+
+        Returns
+        -------
+        _order_df : pandas.DataFrame
+           Pandas DataFrame with only one row containing the entry for the order.
+
+        """
         df = self.db.df[self.db.df['Taxon_rank'].str.contains('order')]
         _family_df = df[df['Scientific_name'].str.contains(name, case=False, na=False)]
         if _family_df.shape[0] == 0:

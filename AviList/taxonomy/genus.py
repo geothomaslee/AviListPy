@@ -52,6 +52,21 @@ class Genus():
         return self._data.items()
 
     def lookup_genus(self, name, exact: bool=False):
+        """
+        Parameters
+        ----------
+        name : str
+            Genus to search for.
+        exact : bool, optional
+            If True, will only search for the exact string in the data base. If False, will search
+            for any string containing name as a substring, and is not case sensitive. The default is False.
+
+        Returns
+        -------
+        _genus_df : pandas.DataFrame
+           Pandas DataFrame with only one row containing the entry for the genus.
+
+        """
         df = self.db.df[self.db.df['Taxon_rank'].str.contains('genus')]
         if exact is True:
             _genus_df = df[df['Scientific_name'] == name]
