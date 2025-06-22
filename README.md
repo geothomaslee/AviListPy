@@ -55,7 +55,8 @@ genus = Genus('Calidris', db=db)
 `genus.species` contains a list of `Species` objects
 
 Higher ranks also contain methods that given information about the lower ranked taxons that they contain. For example,
-```from AviList.taxonomy.family import Family
+```
+from AviList.taxonomy.family import Family
 
 family = Family('Podargidae', db=db)
 family.show_genera()
