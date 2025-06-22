@@ -15,8 +15,11 @@ from AviList.data.avilistdatabase import AviListDataBase
 from AviList.taxonomy.genus import Genus
 
 class Family():
-    def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False):
-        self.db = AviListDataBase()
+    def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False, db: AviListDataBase=None):
+        if db is None:
+            self.db = AviListDataBase()
+        else:
+            self.db = db
         self.df = self.lookup_family(name, exact=exact)
         self._data = self.df.iloc[0].to_dict()
         self.name = self._data['Scientific_name']
@@ -72,7 +75,7 @@ class Family():
             raise ValueError('No matching genera found')
         matching_genera_list = []
         for _matching_genus_name in matching_genus_df['Scientific_name'].to_list():
-            matching_genera_list.append(Genus(_matching_genus_name, exact=True))
+            matching_genera_list.append(Genus(_matching_genus_name, db=self.db, exact=True))
         return matching_genera_list
 
     def find_matching_species(self):

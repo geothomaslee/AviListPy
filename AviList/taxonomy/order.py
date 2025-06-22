@@ -12,8 +12,11 @@ from AviList.taxonomy.family import Family
 from AviList.data.avilistdatabase import AviListDataBase
 
 class Order():
-    def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False):
-        self.db = AviListDataBase()
+    def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False, db: AviListDataBase=None):
+        if db is None:
+            self.db = AviListDataBase()
+        else:
+            self.db = db
         self.df = self.lookup_order(name)
         self._data = self.df.iloc[0].to_dict()
         self.name = self._data['Scientific_name']
@@ -67,7 +70,7 @@ class Order():
             raise ValueError('No matching families found')
         matching_family_list = []
         for _matching_family_name in matching_family_df['Scientific_name'].to_list():
-            matching_family_list.append(Family(_matching_family_name, exact=True))
+            matching_family_list.append(Family(_matching_family_name, db=self.db, exact=True))
         return matching_family_list
 
     def find_matching_genera(self):

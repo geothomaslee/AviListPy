@@ -15,8 +15,11 @@ from AviList.data.avilistdatabase import AviListDataBase
 from AviList.taxonomy.species import Species
 
 class Genus():
-    def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False):
-        self.db = AviListDataBase()
+    def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False, db: AviListDataBase=None):
+        if db is None:
+            self.db = AviListDataBase()
+        else:
+            self.db = db
         self.df = self.lookup_genus(name, exact=exact)
         self._data = self.df.iloc[0].to_dict()
         self.name = self._data['Scientific_name']
@@ -70,7 +73,7 @@ class Genus():
         matching_species_df = species_df[species_df['Scientific_name'].str.contains(self.name)]
         matching_species_list = []
         for _matching_species_name in matching_species_df['English_name_AviList'].to_list():
-            matching_species_list.append(Species(_matching_species_name, exact=True, load_subspecies=load_subspecies))
+            matching_species_list.append(Species(_matching_species_name, db = self.db, exact=True, load_subspecies=load_subspecies))
         return matching_species_list
 
     def show_species(self):

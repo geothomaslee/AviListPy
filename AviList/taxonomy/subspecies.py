@@ -14,8 +14,11 @@ AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi
 from AviList.data.avilistdatabase import AviListDataBase
 
 class Subspecies():
-    def __init__(self, name, exact: bool=False):
-        self.db = AviListDataBase()
+    def __init__(self, name, exact: bool=False, db: AviListDataBase=None):
+        if db is None:
+            self.db = AviListDataBase()
+        else:
+            self.db = db
         self.df = self.lookup_subspecies(name, exact=exact)
         self._data = self.df.iloc[0].to_dict()
         self.species = self._data['Scientific_name']
