@@ -82,6 +82,14 @@ class Order():
             species_list += genus.species
         return species_list
 
+    def show_families(self):
+        print(f'{len(self.families)} family in order {self.name}')
+        count = 0
+        for family in self.families:
+            print(f'{family.name}: {len(family.genera)} genera, {len(family.species)} species')
+            count += len(family.species)
+        print(f'{count} total species in {self.name}')
+
     def show_genera(self):
         print(f'{len(self.genera)} genera in family {self.name}')
         count = 0
