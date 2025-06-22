@@ -18,12 +18,17 @@ from AviList.taxonomy.order import Order
 
 species = Species('Brown Thornbill', load_subspecies=True)
 print(species)
+print('\n')
 
 genus = Genus('Calidris')
+print(genus)
+print('\n')
 
-family = Family('Pogargidae')
+family = Family('Podargidae')
 print(family)
 family.show_genera()
+print('\n')
 
-order = Order('Apodiformes')
+order = Order('Anseriformes')
 print(order)
+order.show_families()
