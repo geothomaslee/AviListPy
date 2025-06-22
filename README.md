@@ -20,7 +20,7 @@ Or if you want to install into an existing environment:
 `mamba install pandas openpyxl`
 
 #### First Time Use
-AviListPy uses the `AviListDataBase` class as a very light weight wrapper for a Pandas DataFrame containing the actual Excel file from the AviList team. This `AviListDataBase` is used by every taxonomic class, and an instance of the database can be passed directly to each taxonomic object when initializing, or these classes can create their own irectly from the AviList excel file. It is recommended to initialize a single instanec of `AviListDatabase` at the beginning of your script and pass it to taxonomic classes, because it takes about 10 seconds to load the entire excel sheet. `AviListDataBase` can also be fed a file path, where it will pickle itself or look for an already pickled version of itself to load in. This is the fastest option. 
+AviListPy uses the `AviListDataBase` class as a very light weight wrapper for a Pandas DataFrame containing the actual Excel file from the AviList team. This `AviListDataBase` is used by every taxonomic class, and an instance of the database can be passed directly to each taxonomic object when initializing, or these classes can create their own directly from the AviList excel file. It is recommended to initialize a single instanec of `AviListDatabase` at the beginning of your script and pass it to taxonomic classes, because it takes about 10 seconds to load the entire excel sheet. `AviListDataBase` can also be fed a file path, where it will pickle itself or look for an already pickled version of itself to load in. This is the fastest option. 
 
 #### Example Setup
 ```
