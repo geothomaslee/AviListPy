@@ -72,3 +72,7 @@ class Genus():
         for _matching_species_name in matching_species_df['English_name_AviList'].to_list():
             matching_species_list.append(Species(_matching_species_name, exact=True, load_subspecies=load_subspecies))
         return matching_species_list
+
+    def show_species(self):
+        for species in self.species:
+            print(species)
