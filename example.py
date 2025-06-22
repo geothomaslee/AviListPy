@@ -11,20 +11,19 @@ AviList Citation:
 AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025
 """
 
-from AviList.data.avilistdatabase import AviListDataBase
 from AviList.taxonomy.species import Species
 from AviList.taxonomy.genus import Genus
 from AviList.taxonomy.family import Family
 from AviList.taxonomy.order import Order
 
-db = AviListDataBase()
-db._save()
+species = Species('Brown Thornbill', load_subspecies=True)
+print(species)
 
-#species = Species('Brown Thornbill', load_subspecies=True)
-#print(species)
+genus = Genus('Calidris')
 
-#family = Family('Acanthizidae', load_subspecies=False)
-#family.show_genera()
+family = Family('Pogargidae')
+print(family)
+family.show_genera()
 
-order = Order('Anseriformes')
+order = Order('Apodiformes')
 print(order)
