@@ -23,9 +23,9 @@ AviListPy uses the `AviListDataBase` class as a very light weight wrapper for a 
 
 #### Example Setup
 <python>
-from AviList.database.avilistdatabase import AviListDataBase
+  from AviList.database.avilistdatabase import AviListDataBase
 
-db = AviListDataBase(path='/path/to/database/AviListDataBase.db')
+  db = AviListDataBase(path='/path/to/database/AviListDataBase.db')
 </python>
 `db` can then be fed to all taxonomic objects in your script.
 
