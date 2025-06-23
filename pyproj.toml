@@ -1,0 +1,19 @@
+[project]
+name = "AviListPy"
+version = "1.0.0"
+authors = [
+  { name="Thomas Lee", email="tl165@rice.edu" },
+]
+description = "Python implementation of the 2025 AviList Global Avian Checklist."
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "CC0-1.0"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/geothomaslee/AviListPy/"
+Issues = "https://github.com/geothomaslee/AviListPy/issues"
