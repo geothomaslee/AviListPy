@@ -15,7 +15,51 @@ from AviList.data.avilistdatabase import AviListDataBase
 from AviList.taxonomy.species import Species
 
 class Genus():
+    """Container for a Genus in the AviList DataBase
+
+    The third lowest/highest taxonomic rank in the AviList.taxonomy class
+    system. Container for all Species objects corresponding with species
+    in this genus. See Genus.keys() for a list of all available data.
+
+    Attributes:
+    -----------
+    db: AviList.data.avilistdatabase.AviListDataBase
+        AviListDataBase class. It is recommended to pass an existing
+        AviListDataBase object to the Species class during initialization,
+        but if none is given it will initialize one from the Excel sheet. See
+        the Setup section on the main GitHub page for more detail.
+    df: Pandas.DataFrame
+        The single row for this genus in AviList as a Pandas DataFrame.
+    name: str
+        Scientific name for this subspecies, from self['Scientific_name']
+    order: str
+        Taxonomic order
+    family: str
+        Taxonomic family
+    species: list of AviList.taxonomy.species.Species, or None
+
+    Example:
+        >>> db = AviListDataBase()
+        >>> genus = Genus('Ardea',db=db)
+        >>> genus.name
+        'Ardea'
+    """
     def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False, db: AviListDataBase=None):
+        """
+        Parameters
+        ----------
+        name : str
+            English name of the species to search for.
+        exact : bool, optional
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any English name
+            in the database, and is not case sensitive. The default is False.
+        load_subspecies: bool, optional
+            If True, will load Subspecies objects while loading Species. See
+            AviList.taxonomy.species.Species for more information.
+        db : AviListDataBase, optional
+            AviListDataBase. The default is None.
+        """
         if db is None:
             self.db = AviListDataBase()
         else:
@@ -45,13 +89,15 @@ class Genus():
         return key in self._data
 
     def keys(self):
+        """Returns keys in a dictionary.keys() like manner"""
         return self._data.keys()
 
     def values(self):
+        """Returns values in a dictionary.values() like manner"""
         return self._data.values()
 
     def items(self):
-        return self._data.items()
+        """Returns keys, values in a dictionary.items() like manner"""
 
     def lookup_genus(self, name, exact: bool=False):
         """
@@ -60,8 +106,9 @@ class Genus():
         name : str
             Genus to search for.
         exact : bool, optional
-            If True, will only search for the exact string in the data base. If False, will search
-            for any string containing name as a substring, and is not case sensitive. The default is False.
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any scientific name
+            in the database, and is not case sensitive. The default is False.
 
         Returns
         -------
@@ -90,8 +137,9 @@ class Genus():
         Parameters
         ----------
         exact : bool, optional
-            If True, will only search for the exact string in the data base. If False, will search
-            for any string containing name as a substring, and is not case sensitive. The default is False.
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any scientific name
+            in the database, and is not case sensitive. The default is False.
         load_subspecies : bool, optional
             If True, loads subspecies. The default is False.
 
@@ -108,5 +156,6 @@ class Genus():
         return matching_species_list
 
     def show_species(self):
+        """Prints each species in this genus"""
         for species in self.species:
             print(species)
