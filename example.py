@@ -27,7 +27,7 @@ print(species.brief_summary())
 genus = Genus('Calidris', db=db)
 print(genus)
 
-family = Family('Podargidae',db=db)
+family = Family('Anatidae',db=db,exact=True)
 print(family)
 
 order = Order('Anseriformes',db=db)
