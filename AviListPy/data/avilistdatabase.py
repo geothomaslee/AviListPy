@@ -46,7 +46,7 @@ class AviListDataBase():
 
     def load_df(self):
         """Loads the AviList Excel file as a Pandas DataFrame"""
-        with resources.files('AviList.data').joinpath('AviList-v2025-11Jun-extended.xlsx').open('rb') as f:
+        with resources.files('AviListPy.data').joinpath('AviList-v2025-11Jun-extended.xlsx').open('rb') as f:
             return pd.read_excel(f)
 
     def _save(self, path=None):

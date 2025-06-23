@@ -11,5 +11,11 @@ Citations:
 AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025
 """
 
-all = ['data','taxonomy']
-__version__ = "1.0.0"
+from AviListPy.data.avilistdatabase import AviListDataBase
+from AviListPy.taxonomy.species import Species
+from AviListPy.taxonomy.genus import Genus
+from AviListPy.taxonomy.family import Family
+from AviListPy.taxonomy.order import Order
+from AviListPy.taxonomy.subspecies import Subspecies
+
+__all__ = [AviListDataBase, Order, Family, Genus, Species, Subspecies]
