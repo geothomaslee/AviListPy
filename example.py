@@ -11,16 +11,7 @@ AviList Citation:
 AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025
 """
 
-"""
-from AviList.taxonomy.species import Species
-from AviList.taxonomy.genus import Genus
-from AviList.taxonomy.family import Family
-from AviList.taxonomy.order import Order
-"""
-
-#from AviList.data.avilistdatabase import AviListDataBase
-
-from AviListPy import Species, Genus, Subspecies, Order, Family, AviListDataBase
+from AviListPy import Species, Genus, Order, Family, AviListDataBase
 
 db = AviListDataBase(path='C:\\thomas\\example_path\\AviListDataBase.db',overwrite_existing=False,verbose=True)
 
