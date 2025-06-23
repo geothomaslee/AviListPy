@@ -113,6 +113,7 @@ class Species():
 
     def items(self):
         """Returns keys, values in a dictionary.items() like manner"""
+        return self._data.items()
 
     def lookup_species_common_name(self, name: str, exact: bool=False):
         """
