@@ -11,8 +11,8 @@ AviList Citation:
 AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025
 """
 
-from AviList.data.avilistdatabase import AviListDataBase
-from AviList.taxonomy.subspecies import Subspecies
+from AviListPy.data.avilistdatabase import AviListDataBase
+from AviListPy.taxonomy.subspecies import Subspecies
 
 class Species():
     """Container for a Species in the AviList DataBase

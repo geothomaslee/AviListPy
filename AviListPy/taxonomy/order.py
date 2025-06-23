@@ -8,8 +8,8 @@ Department of Earth, Environmental, and Planetary Sciences
 Email: tl165@rice.edu
 """
 
-from AviList.taxonomy.family import Family
-from AviList.data.avilistdatabase import AviListDataBase
+from AviListPy.taxonomy.family import Family
+from AviListPy.data.avilistdatabase import AviListDataBase
 
 class Order():
     """Container for a Family in the AviList DataBase
