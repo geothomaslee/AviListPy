@@ -21,7 +21,7 @@ class Family():
     system. Container for all Genus objects corresponding with genera
     in this family. See Family.keys() for a list of all available data. Can
     access data in a dictionary-like manner where keys are columns in the
-    AviList, but iterating will iterate through Family.genera()
+    AviList, but iterating will iterate through Family.genera
 
     Attributes:
     -----------
@@ -53,6 +53,21 @@ class Family():
 
     """
     def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False, db: AviListDataBase=None):
+        """
+        Parameters
+        ----------
+        name : str
+            Scientific name of the family to search for.
+        exact : bool, optional
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any English name
+            in the database, and is not case sensitive. The default is False.
+        load_subspecies: bool, optional
+            If True, will load Subspecies objects while loading Species. See
+            AviList.taxonomy.species.Species for more information.
+        db : AviListDataBase, optional
+            AviListDataBase. The default is None.
+        """
         if db is None:
             self.db = AviListDataBase()
         else:
