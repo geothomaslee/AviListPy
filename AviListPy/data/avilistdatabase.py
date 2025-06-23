@@ -31,7 +31,8 @@ class AviListDataBase():
             start_time = datetime.now()
             self.df = self.load_df()
             verbose_print(f'Database loaded in {datetime.now() - start_time}')
-            self._save(path)
+            if path is not None:
+                self._save(path)
         else:
             start_time = datetime.now()
             try:
