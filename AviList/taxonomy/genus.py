@@ -21,7 +21,7 @@ class Genus():
     system. Container for all Species objects corresponding with species
     in this genus. See Genus.keys() for a list of all available data. Can
     access data in a dictionary-like manner where keys are columns in the
-    AviList, but iterating will iterate through Genus.species()
+    AviList, but iterating will iterate through Genus.species
 
     Attributes:
     -----------
@@ -45,13 +45,15 @@ class Genus():
         >>> genus = Genus('Ardea',db=db)
         >>> genus.name
         'Ardea'
+        >>> genus['Scientific_name']
+        'Ardea'
     """
     def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False, db: AviListDataBase=None):
         """
         Parameters
         ----------
         name : str
-            English name of the species to search for.
+            Scientific name of the species to search for.
         exact : bool, optional
             If True, will only search for an exact match for the name string.
             If False, searches for name as a substring of any English name
