@@ -14,7 +14,50 @@ AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi
 from AviList.data.avilistdatabase import AviListDataBase
 
 class Subspecies():
+    """Container for a Subspecies in the AviList DataBase
+
+    The lowest taxonomic rank in the AviList.taxonomy class system. Generally,
+    this class is better accessed by initializing the Species class and
+    using the load_subspecies=True option, and then accessing this class inside
+    the Species.subspecies attribute
+
+    Attributes:
+    -----------
+    db: AviList.data.avilistdatabase.AviListDataBase
+        AviListDataBase class. It is recommended to pass an existing
+        AviListDataBase object to the Subspecies class during initialization,
+        but if none is given it will initialize one from the Excel sheet. See
+        the Setup section on the main GitHub page for more detail.
+    df: Pandas.DataFrame
+        The single row for this subspecies in AviList as a Pandas DataFrame.
+    name: str
+        Scientific name for this subspecies, from self['Scientific_name']
+    order: str
+        Taxonomic order
+    family: str
+        Taxonomic family
+    genus: str
+        Taxonomic genus
+
+    Example:
+        >>> db = AviListDataBase()
+        >>> subspecies = Subspecies(name = "Ardea alba egretta",db=db)
+        >>> subspecies.name
+        'Adra alba egretta'
+    """
     def __init__(self, name, exact: bool=False, db: AviListDataBase=None):
+        """
+        Parameters
+        ----------
+        name : str
+            Scientific name of the subspecies to search for.
+        exact : bool, optional
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any scientific name
+            in the database, and is not case sensitive. The default is False.
+        db : AviListDataBase, optional
+            AviListDataBase. The default is None.
+        """
         if db is None:
             self.db = AviListDataBase()
         else:
@@ -24,6 +67,7 @@ class Subspecies():
         self.name = self._data['Scientific_name']
         self.order = self._data['Order']
         self.family = self._data['Family']
+        self.genus = self.get_genus()
 
     def __str__(self):
         return_str = f'{self["Scientific_name"]}'
@@ -43,12 +87,15 @@ class Subspecies():
         return key in self._data
 
     def keys(self):
+        """Returns keys in a dictionary.keys() like manner"""
         return self._data.keys()
 
     def values(self):
+        """Returns values in a dictionary.values() like manner"""
         return self._data.values()
 
     def items(self):
+        """Returns keys, values in a dictionary.items() like manner"""
         return self._data.items()
 
     def lookup_subspecies(self, name: str, exact: bool=False):
@@ -58,8 +105,9 @@ class Subspecies():
         name : str
             Subspecies to search for.
         exact : bool, optional
-            If True, will only search for the exact string in the data base. If False, will search
-            for any string containing name as a substring, and is not case sensitive. The default is False.
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any scientific name
+            in the database, and is not case sensitive. The default is False.
 
         Returns
         -------
@@ -82,3 +130,7 @@ class Subspecies():
             raise ValueError(fail_str)
         _subspecies_df = _subspecies_df.dropna(axis=1)
         return _subspecies_df
+
+    def get_genus(self):
+        """Returns the genus as a string"""
+        return self.name.split(' ')[0]
