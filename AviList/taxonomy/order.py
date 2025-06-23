@@ -20,7 +20,7 @@ class Order():
         self.df = self.lookup_order(name)
         self._data = self.df.iloc[0].to_dict()
         self.name = self._data['Scientific_name']
-        self.families = self.find_matching_families(exact=exact,load_subspecies=load_subspecies)
+        self.families = self.find_matching_families(load_subspecies=load_subspecies)
         self.genera = self.find_matching_genera()
         self.species = self.find_matching_species()
 
@@ -43,12 +43,15 @@ class Order():
         return key in self._data
 
     def keys(self):
+        """Returns keys in a dictionary.keys() like manner"""
         return self._data.keys()
 
     def values(self):
+        """Returns values in a dictionary.values() like manner"""
         return self._data.values()
 
     def items(self):
+        """Returns keys, values in a dictionary.items() like manner"""
         return self._data.items()
 
     def lookup_order(self, name):
@@ -58,8 +61,9 @@ class Order():
         name : str
             Order to search for.
         exact : bool, optional
-            If True, will only search for the exact string in the data base. If False, will search
-            for any string containing name as a substring, and is not case sensitive. The default is False.
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any scientific name
+            in the database, and is not case sensitive. The default is False.
 
         Returns
         -------
@@ -79,13 +83,14 @@ class Order():
         _family_df = _family_df.dropna(axis=1)
         return _family_df
 
-    def find_matching_families(self, exact: bool=False, load_subspecies: bool=False):
+    def find_matching_families(self, load_subspecies: bool=False):
         """
         Parameters
         ----------
         exact : bool, optional
-            If True, will only search for the exact string in the data base. If False, will search
-            for any string containing name as a substring, and is not case sensitive. The default is False.
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any scientific name
+            in the database, and is not case sensitive. The default is False.
         load_subspecies : bool, optional
             If True, loads subspecies. The default is False.
 
@@ -101,7 +106,7 @@ class Order():
             raise ValueError('No matching families found')
         matching_family_list = []
         for _matching_family_name in matching_family_df['Scientific_name'].to_list():
-            matching_family_list.append(Family(_matching_family_name, db=self.db, exact=True))
+            matching_family_list.append(Family(_matching_family_name, db=self.db, exact=True, load_subspecies=load_subspecies))
         return matching_family_list
 
     def find_matching_genera(self):

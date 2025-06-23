@@ -61,7 +61,7 @@ class Family():
         self._data = self.df.iloc[0].to_dict()
         self.name = self._data['Scientific_name']
         self.order = self._data['Order']
-        self.genera = self.find_matching_genera(exact=exact, load_subspecies=load_subspecies)
+        self.genera = self.find_matching_genera(load_subspecies=load_subspecies)
         self.species = self.find_matching_species()
 
     def __str__(self):
@@ -131,15 +131,10 @@ class Family():
         _family_df = _family_df.dropna(axis=1)
         return _family_df
 
-    def find_matching_genera(self, exact: bool=False, load_subspecies: bool=False):
+    def find_matching_genera(self, load_subspecies: bool=False):
         """
         Parameters
         ----------
-        exact : bool, optional
-            If True, will only search for an exact match for the name string.
-            If False, searches for name as a substring of any scientific name
-            in the database, and is not case sensitive. The default is False.
-        load_subspecies : bool, optional
             If True, loads subspecies. The default is False.
 
         Returns
@@ -154,7 +149,7 @@ class Family():
             raise ValueError('No matching genera found')
         matching_genera_list = []
         for _matching_genus_name in matching_genus_df['Scientific_name'].to_list():
-            matching_genera_list.append(Genus(_matching_genus_name, db=self.db, exact=True))
+            matching_genera_list.append(Genus(_matching_genus_name, db=self.db, exact=True, load_subspecies=load_subspecies))
         return matching_genera_list
 
     def find_matching_species(self):
