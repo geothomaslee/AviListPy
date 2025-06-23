@@ -12,7 +12,59 @@ from AviList.taxonomy.family import Family
 from AviList.data.avilistdatabase import AviListDataBase
 
 class Order():
+    """Container for a Family in the AviList DataBase
+
+    The highest taxonomic rank in the AviList.taxonomy class system. Container
+    for all family objects corresponding with family
+    in this order. See Order.keys() for a list of all available data. Can
+    access data in a dictionary-like manner where keys are columns in the
+    AviList, but iterating will iterate through Order.families
+
+    Attributes:
+    -----------
+    db: AviList.data.avilistdatabase.AviListDataBase
+        AviListDataBase class. It is recommended to pass an existing
+        AviListDataBase object to the Family class during initialization,
+        but if none is given it will initialize one from the Excel sheet. See
+        the Setup section on the main GitHub page for more detail.
+    df: Pandas.DataFrame
+        The single row for this family in AviList as a Pandas DataFrame.
+    name: str
+        Scientific name for this family, from self['Scientific_name']
+    order: str
+        Taxonomic order
+    family: str
+        Taxonomic family
+    genera: list of AviList.taxonomy.genus.Genus
+        All genera within this family.
+    species: list of AviList.taxonomy.species.Species
+        All species within this family.
+
+    Example:
+        >>> db = AviListDataBase()
+        >>> order = Order('Anseriformes',db=db)
+        >>> order.name
+        'Anseriformes'
+        >>> order['Sequence']
+        230
+
+    """
     def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False, db: AviListDataBase=None):
+        """
+        Parameters
+        ----------
+        name : str
+            Scientific name of the species to search for.
+        exact : bool, optional
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any English name
+            in the database, and is not case sensitive. The default is False.
+        load_subspecies: bool, optional
+            If True, will load Subspecies objects while loading Species. See
+            AviList.taxonomy.species.Species for more information.
+        db : AviListDataBase, optional
+            AviListDataBase. The default is None.
+        """
         if db is None:
             self.db = AviListDataBase()
         else:
