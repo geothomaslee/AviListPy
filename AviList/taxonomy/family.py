@@ -15,6 +15,43 @@ from AviList.data.avilistdatabase import AviListDataBase
 from AviList.taxonomy.genus import Genus
 
 class Family():
+    """Container for a Family in the AviList DataBase
+
+    The second highest taxonomic rank in the AviList.taxonomy class
+    system. Container for all Genus objects corresponding with genera
+    in this family. See Family.keys() for a list of all available data. Can
+    access data in a dictionary-like manner where keys are columns in the
+    AviList, but iterating will iterate through Family.genera()
+
+    Attributes:
+    -----------
+    db: AviList.data.avilistdatabase.AviListDataBase
+        AviListDataBase class. It is recommended to pass an existing
+        AviListDataBase object to the Family class during initialization,
+        but if none is given it will initialize one from the Excel sheet. See
+        the Setup section on the main GitHub page for more detail.
+    df: Pandas.DataFrame
+        The single row for this family in AviList as a Pandas DataFrame.
+    name: str
+        Scientific name for this family, from self['Scientific_name']
+    order: str
+        Taxonomic order
+    family: str
+        Taxonomic family
+    genera: list of AviList.taxonomy.genus.Genus
+        All genera within this family.
+    species: list of AviList.taxonomy.species.Species
+        All species within this family.
+
+    Example:
+        >>> db = AviListDataBase()
+        >>> family = Family('Anatidae',db=db)
+        >>> family.name
+        'Anatidae'
+        >>> family['Family_English_name']
+        'Ducks, Swans, and Geese'
+
+    """
     def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False, db: AviListDataBase=None):
         if db is None:
             self.db = AviListDataBase()
@@ -44,13 +81,22 @@ class Family():
     def __contains__(self, key):
         return key in self._data
 
+    def __iter__(self):
+        return iter(self.genera)
+
+    def __len__(self):
+        return len(self.genera)
+
     def keys(self):
+        """Returns keys in a dictionary.keys() like manner"""
         return self._data.keys()
 
     def values(self):
+        """Returns values in a dictionary.values() like manner"""
         return self._data.values()
 
     def items(self):
+        """Returns keys, values in a dictionary.items() like manner"""
         return self._data.items()
 
     def lookup_family(self, name, exact: bool=False):
@@ -60,8 +106,9 @@ class Family():
         name : str
             Family to search for.
         exact : bool, optional
-            If True, will only search for the exact string in the data base. If False, will search
-            for any string containing name as a substring, and is not case sensitive. The default is False.
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any scientific name
+            in the database, and is not case sensitive. The default is False.
 
         Returns
         -------
@@ -89,8 +136,9 @@ class Family():
         Parameters
         ----------
         exact : bool, optional
-            If True, will only search for the exact string in the data base. If False, will search
-            for any string containing name as a substring, and is not case sensitive. The default is False.
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any scientific name
+            in the database, and is not case sensitive. The default is False.
         load_subspecies : bool, optional
             If True, loads subspecies. The default is False.
 
