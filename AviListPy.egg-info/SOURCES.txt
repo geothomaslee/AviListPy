@@ -1,0 +1,16 @@
+LICENSE
+README.md
+pyproject.toml
+AviListPy/__init__.py
+AviListPy.egg-info/PKG-INFO
+AviListPy.egg-info/SOURCES.txt
+AviListPy.egg-info/dependency_links.txt
+AviListPy.egg-info/top_level.txt
+AviListPy/data/__init__.py
+AviListPy/data/avilistdatabase.py
+AviListPy/taxonomy/__init__.py
+AviListPy/taxonomy/family.py
+AviListPy/taxonomy/genus.py
+AviListPy/taxonomy/order.py
+AviListPy/taxonomy/species.py
+AviListPy/taxonomy/subspecies.py

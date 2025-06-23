@@ -14,6 +14,16 @@ classifiers = [
 license = "CC0-1.0"
 license-files = ["LICEN[CS]E*"]
 
+[build-system]
+# Minimum requirements for the build system to execute.
+# see PEP518: https://www.python.org/dev/peps/pep-0518/
+requires = [
+    'setuptools',
+    'pandas',
+    'openpyxl'
+    ]
+build-backend = "setuptools.build_meta"
+
 [project.urls]
 Homepage = "https://github.com/geothomaslee/AviListPy/"
 Issues = "https://github.com/geothomaslee/AviListPy/issues"
