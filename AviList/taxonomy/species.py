@@ -175,5 +175,5 @@ class Species():
         try:
             return_str += f"\nRange: {self['Range']}"
         except KeyError:
-            return_str += f"\nRange Not Specified"
+            return_str += "\nRange Not Specified"
         return return_str + '\n'
