@@ -83,6 +83,20 @@ class Family():
         return _family_df
 
     def find_matching_genera(self, exact: bool=False, load_subspecies: bool=False):
+        """
+        Parameters
+        ----------
+        exact : bool, optional
+            If True, will only search for the exact string in the data base. If False, will search
+            for any string containing name as a substring, and is not case sensitive. The default is False.
+        load_subspecies : bool, optional
+            If True, loads subspecies. The default is False.
+
+        Returns
+        -------
+        matching_genera_list : list of AviList.taxonomy.genus.Genus
+            List of genera contained within the order.
+        """
         genus_df = self.db.df[self.db.df['Taxon_rank'] == 'genus']
         matching_genus_df = genus_df[genus_df['Family'] == str(self.name)]
         print(f'Loading {len(matching_genus_df)} genera in family {self.name}')

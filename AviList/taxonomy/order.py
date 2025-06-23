@@ -78,6 +78,20 @@ class Order():
         return _family_df
 
     def find_matching_families(self, exact: bool=False, load_subspecies: bool=False):
+        """
+        Parameters
+        ----------
+        exact : bool, optional
+            If True, will only search for the exact string in the data base. If False, will search
+            for any string containing name as a substring, and is not case sensitive. The default is False.
+        load_subspecies : bool, optional
+            If True, loads subspecies. The default is False.
+
+        Returns
+        -------
+        matching_family_list : list of AviList.taxonomy.family.Family
+            List of families contained within the order.
+        """
         family_df = self.db.df[self.db.df['Taxon_rank'] == 'family']
         matching_family_df = family_df[family_df['Order'] == str(self.name)]
         print(f'Loading {len(matching_family_df)} families in order {self.name}')

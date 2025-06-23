@@ -84,6 +84,20 @@ class Genus():
         return _genus_df
 
     def find_matching_species(self, load_subspecies: bool=False):
+        """
+        Parameters
+        ----------
+        exact : bool, optional
+            If True, will only search for the exact string in the data base. If False, will search
+            for any string containing name as a substring, and is not case sensitive. The default is False.
+        load_subspecies : bool, optional
+            If True, loads subspecies. The default is False.
+
+        Returns
+        -------
+        matching_species_list : list of AviList.taxonomy.species.Species
+            List of species contained within the order.
+        """
         species_df = self.db.df[self.db.df['Taxon_rank'] == 'species']
         matching_species_df = species_df[species_df['Scientific_name'].str.contains(self.name)]
         matching_species_list = []
