@@ -26,6 +26,7 @@ class Species():
         self.scientific_name = self._data['Scientific_name']
         self.order = self._data['Order']
         self.family = self._data['Family']
+        self.genus = self.get_genus()
         self.subspecies = None
 
         if load_subspecies is True:
@@ -33,11 +34,13 @@ class Species():
 
     def __str__(self):
         return_str = f'{self["English_name_AviList"]}'
+        num_equals = (80 - len(return_str)) // 2
+        return_str = '='*num_equals + return_str + '='*num_equals
         if self.subspecies is not None:
             return_str += f'\nContains {len(self.subspecies)} subspecies'
         for key, val in self.items():
             return_str += (f'\n{key}: {val}')
-        return return_str
+        return return_str + '\n'
 
     def __getitem__(self, key):
         return self._data[key]
@@ -89,9 +92,26 @@ class Species():
         return _species_df
 
     def get_subspecies(self):
+        """Pulls all subspecies for this species and writes them as a list of
+        AviList.taxonomy.subspecies.Subspecies objects to Species.subspecies"""
         subspecies_df = self.db.df[self.db.df['Taxon_rank'] == 'subspecies']
         matching_subspecies_df = subspecies_df[subspecies_df['Scientific_name'].str.contains(self.scientific_name, case=False,na=False)]
         matching_subspecies_list = []
         for _matching_subspecies_name in matching_subspecies_df['Scientific_name'].to_list():
             matching_subspecies_list.append(Subspecies(_matching_subspecies_name, db=self.db, exact=True))
         return matching_subspecies_list
+
+    def get_genus(self):
+        return self.scientific_name.split(' ')[0]
+
+    def brief_summary(self):
+        return_str = f'{self["English_name_AviList"]}'
+        num_equals = (80 - len(return_str)) // 2
+        return_str = '='*num_equals + return_str + '='*num_equals
+        return_str += f"\nScientific Name: self['Scientific_name']"}
+        if subspecies is not None:
+            return_str += f"{len(self.subspecies)} subspecies: "
+            for subspecies in self.subspecies:
+                return_str += f"{subspecies.name}, "
+
+        return return_str + '\n'

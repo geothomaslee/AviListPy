@@ -25,11 +25,13 @@ class Order():
         self.species = self.find_matching_species()
 
     def __str__(self):
-        return_str = f'{self["Scientific_name"]}'
-        return_str = f'{len(self.species)} species in {len(self.genera)} genera across {len(self.families)} families'
+        return_str = f'{self.name}'
+        num_equals = (80 - len(return_str)) // 2
+        return_str = '='*num_equals + return_str + '='*num_equals
+        return_str += f'\n{len(self.species)} species in {len(self.genera)} genera across {len(self.families)} families'
         for key, val in self.items():
             return_str += (f'\n{key}: {val}')
-        return return_str
+        return return_str + '\n'
 
     def __getitem__(self, key):
         return self._data[key]

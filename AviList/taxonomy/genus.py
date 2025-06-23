@@ -29,9 +29,11 @@ class Genus():
 
     def __str__(self):
         return_str = f'{self["Scientific_name"]}'
+        num_equals = (80 - len(return_str)) // 2
+        return_str = '='*num_equals + return_str + '='*num_equals
         for key, val in self.items():
             return_str += (f'\n{key}: {val}')
-        return return_str
+        return return_str + '\n'
 
     def __getitem__(self, key):
         return self._data[key]

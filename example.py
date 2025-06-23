@@ -20,20 +20,14 @@ from AviList.data.avilistdatabase import AviListDataBase
 
 db = AviListDataBase(path='C:\\thomas\\example_path\\AviListDataBase.db',overwrite_existing=False,verbose=True)
 
-
-species = Species('Brown Thornbill', db=db, load_subspecies=True)
+species = Species("Harris's Hawk", db=db, load_subspecies=True)
 print(species)
-print('\n')
 
 genus = Genus('Calidris', db=db)
 print(genus)
-print('\n')
 
 family = Family('Podargidae',db=db)
 print(family)
-family.show_genera()
-print('\n')
 
 order = Order('Anseriformes',db=db)
 print(order)
-order.show_families()
