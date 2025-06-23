@@ -1,20 +1,20 @@
 [project]
 name = "AviListPy"
-version = "1.0.1"
+version = "1.0.2"
 authors = [
   { name="Thomas Lee", email="tl165@rice.edu" },
 ]
 description = "Python implementation of the 2025 AviList Global Avian Checklist."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
 license = "CC0-1.0"
 license-files = ["LICEN[CS]E*"]
-dependencies=["pandas",
-              "openpyxl"
+dependencies=["pandas >= 2.3.0",
+              "openpyxl >= 3.1.5"
              ]
 
 [build-system]

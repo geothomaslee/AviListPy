@@ -5,6 +5,7 @@ AviListPy/__init__.py
 AviListPy.egg-info/PKG-INFO
 AviListPy.egg-info/SOURCES.txt
 AviListPy.egg-info/dependency_links.txt
+AviListPy.egg-info/requires.txt
 AviListPy.egg-info/top_level.txt
 AviListPy/data/__init__.py
 AviListPy/data/avilistdatabase.py
