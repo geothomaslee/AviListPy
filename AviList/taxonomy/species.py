@@ -49,8 +49,10 @@ class Species():
         >>> species = Species(name = "Great Egret",db=db)
         >>> subspecies.name
         'Great Egret'
-        >>> subspecies.scientific_name
-        'Ardea alba'
+        >>> subspecies['Bibliographic_details']
+        'Systema Naturæ per Regna Tria Naturæ, Secundum Classes, Ordines,
+        Genera, Species, cum Characteribus, Differentiis, Synonymis, Locis.
+        Tomus I. Editio decima, reformata 1 p.144'
     """
     def __init__(self, name: str, exact: bool=False, load_subspecies=False, db: AviListDataBase=None):
         """
