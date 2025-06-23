@@ -15,7 +15,59 @@ from AviList.data.avilistdatabase import AviListDataBase
 from AviList.taxonomy.subspecies import Subspecies
 
 class Species():
+    """Container for a Species in the AviList DataBase
+
+    The second lowest taxonomic rank in the AviList.taxonomy class system. This
+    class is initialized with the English name for the species. This will be
+    updated to support initializing with the scientific name in the future.
+
+    Attributes:
+    -----------
+    db: AviList.data.avilistdatabase.AviListDataBase
+        AviListDataBase class. It is recommended to pass an existing
+        AviListDataBase object to the Species class during initialization,
+        but if none is given it will initialize one from the Excel sheet. See
+        the Setup section on the main GitHub page for more detail.
+    df: Pandas.DataFrame
+        The single row for this subspecies in AviList as a Pandas DataFrame.
+    name: str
+        English name for this species, from self['English_name_AviList']
+    scientific_name: str
+        Scientific name for this subspecies, from self['Scientific_name']
+    order: str
+        Taxonomic order
+    family: str
+        Taxonomic family
+    genus: str
+        Taxonomic genus
+    subspecies: list of AviList.taxonomy.subspecies.Subspecies, or None
+        If load_subspecies is False, then None. If True, then list of
+        Subspecies objects.
+
+    Example:
+        >>> db = AviListDataBase()
+        >>> species = Species(name = "Great Egret",db=db)
+        >>> subspecies.name
+        'Great Egret'
+        >>> subspecies.scientific_name
+        'Ardea alba'
+    """
     def __init__(self, name: str, exact: bool=False, load_subspecies=False, db: AviListDataBase=None):
+        """
+        Parameters
+        ----------
+        name : str
+            English name of the species to search for.
+        exact : bool, optional
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any English name
+            in the database, and is not case sensitive. The default is False.
+        load_subspecies: bool, optional
+            If True, will load Subspecies objects for each subspecies and write
+            them in a list to Species.subspecies
+        db : AviListDataBase, optional
+            AviListDataBase. The default is None.
+        """
         if db is None:
             self.db = AviListDataBase()
         else:
@@ -52,13 +104,15 @@ class Species():
         return key in self._data
 
     def keys(self):
+        """Returns keys in a dictionary.keys() like manner"""
         return self._data.keys()
 
     def values(self):
+        """Returns values in a dictionary.values() like manner"""
         return self._data.values()
 
     def items(self):
-        return self._data.items()
+        """Returns keys, values in a dictionary.items() like manner"""
 
     def lookup_species_common_name(self, name: str, exact: bool=False):
         """
@@ -67,8 +121,9 @@ class Species():
         name : str
             Species to search for.
         exact : bool, optional
-            If True, will only search for the exact string in the data base. If False, will search
-            for any string containing name as a substring, and is not case sensitive. The default is False.
+            If True, will only search for an exact match for the name string.
+            If False, searches for name as a substring of any scientific name
+            in the database, and is not case sensitive. The default is False.
 
         Returns
         -------
@@ -102,9 +157,11 @@ class Species():
         return matching_subspecies_list
 
     def get_genus(self):
+        """Returns the genus of this species as a string"""
         return self.scientific_name.split(' ')[0]
 
     def brief_summary(self):
+        """Returns a short, easily readable version of info about this species"""
         return_str = f'{self["English_name_AviList"]}'
         num_equals = (80 - len(return_str)) // 2
         return_str = '='*num_equals + return_str + '='*num_equals
