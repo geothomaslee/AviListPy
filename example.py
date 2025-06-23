@@ -20,8 +20,9 @@ from AviList.data.avilistdatabase import AviListDataBase
 
 db = AviListDataBase(path='C:\\thomas\\example_path\\AviListDataBase.db',overwrite_existing=False,verbose=True)
 
-species = Species("Harris's Hawk", db=db, load_subspecies=True)
+species = Species("Western Cattle Egret", db=db, load_subspecies=True)
 print(species)
+print(species.brief_summary())
 
 genus = Genus('Calidris', db=db)
 print(genus)

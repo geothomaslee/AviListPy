@@ -108,10 +108,15 @@ class Species():
         return_str = f'{self["English_name_AviList"]}'
         num_equals = (80 - len(return_str)) // 2
         return_str = '='*num_equals + return_str + '='*num_equals
-        return_str += f"\nScientific Name: self['Scientific_name']"}
-        if subspecies is not None:
-            return_str += f"{len(self.subspecies)} subspecies: "
+        return_str += f"\nScientific Name: {self['Scientific_name']}"
+        if self.subspecies is not None:
+            return_str += f"\n{len(self.subspecies)} Subspecies: "
             for subspecies in self.subspecies:
                 return_str += f"{subspecies.name}, "
-
+        return_str += f"\nOrder: {self.order}"
+        return_str += f"\nFamily: {self.family}: {self['Family_English_name']}"
+        try:
+            return_str += f"\nRange: {self['Range']}"
+        except KeyError:
+            return_str += f"\nRange Not Specified"
         return return_str + '\n'
