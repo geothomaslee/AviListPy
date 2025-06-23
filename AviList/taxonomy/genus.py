@@ -19,19 +19,21 @@ class Genus():
 
     The third lowest/highest taxonomic rank in the AviList.taxonomy class
     system. Container for all Species objects corresponding with species
-    in this genus. See Genus.keys() for a list of all available data.
+    in this genus. See Genus.keys() for a list of all available data. Can
+    access data in a dictionary-like manner where keys are columns in the
+    AviList, but iterating will iterate through Genus.species()
 
     Attributes:
     -----------
     db: AviList.data.avilistdatabase.AviListDataBase
         AviListDataBase class. It is recommended to pass an existing
-        AviListDataBase object to the Species class during initialization,
+        AviListDataBase object to the Genus class during initialization,
         but if none is given it will initialize one from the Excel sheet. See
         the Setup section on the main GitHub page for more detail.
     df: Pandas.DataFrame
         The single row for this genus in AviList as a Pandas DataFrame.
     name: str
-        Scientific name for this subspecies, from self['Scientific_name']
+        Scientific name for this genus, from self['Scientific_name']
     order: str
         Taxonomic order
     family: str
@@ -88,6 +90,12 @@ class Genus():
     def __contains__(self, key):
         return key in self._data
 
+    def __iter__(self):
+        return iter(self.species)
+
+    def __len__(self):
+        return len(self.species)
+
     def keys(self):
         """Returns keys in a dictionary.keys() like manner"""
         return self._data.keys()
@@ -98,6 +106,7 @@ class Genus():
 
     def items(self):
         """Returns keys, values in a dictionary.items() like manner"""
+        return self._data.items()
 
     def lookup_genus(self, name, exact: bool=False):
         """
