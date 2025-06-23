@@ -21,7 +21,7 @@ class Subspecies():
             self.db = db
         self.df = self.lookup_subspecies(name, exact=exact)
         self._data = self.df.iloc[0].to_dict()
-        self.species = self._data['Scientific_name']
+        self.name = self._data['Scientific_name']
         self.order = self._data['Order']
         self.family = self._data['Family']
 
