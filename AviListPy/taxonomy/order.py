@@ -71,7 +71,7 @@ class Order():
             self.db = AviListDataBase()
         else:
             self.db = db
-        self.df = self.lookup_order(name)
+        self.df = self.lookup_order(name, exact=exact)
         self._data = self.df.iloc[0].to_dict()
         self.name = self._data['Scientific_name']
         self.families = self.find_matching_families(load_subspecies=load_subspecies)
