@@ -35,7 +35,7 @@ Then install with pip:
 `pip install AviListPy --no-deps`
 
 #### Troubleshooting
-I have inconsistently found tha tpip will insist on installing version 1.0.0, which incorrectly defined dependencies. If pip fails to install AviListPy, try:
+I have inconsistently found that pip will insist on installing version 1.0.0, which incorrectly defined dependencies. If pip fails to install AviListPy, try:
 `pip install AviListPy --no-cache-dir` or `pip cache purge` to clear cached versions, and install normally.
 
 ## Usage 
