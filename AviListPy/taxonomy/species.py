@@ -134,9 +134,8 @@ class Species():
            Pandas DataFrame with only one row containing the entry for the species.
         """
         df = self.db.df
-        # We only want to be looking for species in thius function
-        df = df[df['Taxon_rank'] == 'species']
 
+        # First we search for a matching English name
         try:
             if exact is True:
                 _species_df = df[df['English_name_AviList'] == name]
@@ -146,13 +145,17 @@ class Species():
             if _species_df.shape[0] == 0:
                 raise ValueError('No matching species found')
         except ValueError as e:
+            # We only want to search for scientific name if the English name
+            # search doesn't return any results
             if str(e) == 'No matching species found':
-                pass
-
-        if exact is True:
-            _species_df = df[df['Scientific_name'] == name]
-        else:
-            _species_df = df[df['Scientific_name'].str.contains(name, case=False, na=False)]
+                # Scientific name will always be a substring of the subspecies
+                # We need to limit our results to only species
+                if exact is True:
+                    _species_df = df[df['Scientific_name'] == name]
+                    _species_df = _species_df[_species_df['Taxon_rank'] == 'species']
+                else:
+                    _species_df = df[df['Scientific_name'].str.contains(name, case=False, na=False)]
+                    _species_df = _species_df[_species_df['Taxon_rank'] == 'species']
 
         if _species_df.shape[0] == 0:
             raise ValueError('No matching species found')
@@ -162,7 +165,10 @@ class Species():
             for _species_ in _species_df['English_name_AviList'].to_list():
                 fail_str += (f'{_species_}, ')
             raise ValueError(fail_str)
+
+        # Drop nan columns
         _species_df = _species_df.dropna(axis=1)
+
         return _species_df
 
     def get_subspecies(self):
