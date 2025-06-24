@@ -74,7 +74,7 @@ class Species():
             self.db = AviListDataBase()
         else:
             self.db = db
-        self.df = self.lookup_species_common_name(name, exact=exact)
+        self.df = self.lookup_species(name, exact=exact)
         self._data = self.df.iloc[0].to_dict()
         self.name = self._data['English_name_AviList']
         self.scientific_name = self._data['Scientific_name']
@@ -117,7 +117,7 @@ class Species():
         """Returns keys, values in a dictionary.items() like manner"""
         return self._data.items()
 
-    def lookup_species_common_name(self, name: str, exact: bool=False):
+    def lookup_species(self, name: str, exact: bool=False):
         """
         Parameters
         ----------
@@ -134,13 +134,29 @@ class Species():
            Pandas DataFrame with only one row containing the entry for the species.
         """
         df = self.db.df
+        # We only want to be looking for species in thius function
+        df = df[df['Taxon_rank'] == 'species']
+
+        try:
+            if exact is True:
+                _species_df = df[df['English_name_AviList'] == name]
+            else:
+                _species_df = df[df['English_name_AviList'].str.contains(name, case=False, na=False)]
+
+            if _species_df.shape[0] == 0:
+                raise ValueError('No matching species found')
+        except ValueError as e:
+            if str(e) == 'No matching species found':
+                pass
+
         if exact is True:
-            _species_df = df[df['English_name_AviList'] == name]
+            _species_df = df[df['Scientific_name'] == name]
         else:
-            _species_df = df[df['English_name_AviList'].str.contains(name, case=False, na=False)]
+            _species_df = df[df['Scientific_name'].str.contains(name, case=False, na=False)]
 
         if _species_df.shape[0] == 0:
             raise ValueError('No matching species found')
+
         if _species_df.shape[0] > 1:
             fail_str = f'{name} could refer to: \n'
             for _species_ in _species_df['English_name_AviList'].to_list():
