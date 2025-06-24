@@ -18,7 +18,7 @@ import pickle
 import pandas as pd
 
 class AviListDataBase():
-    def __init__(self, path: str=None, overwrite_existing=False, verbose=False):
+    def __init__(self, path: str=None, overwrite_existing=False, verbose=False) -> None:
         def verbose_print(*args, **kwargs):
             """Helper function that only prints if verbose is True"""
             if verbose:
@@ -45,12 +45,12 @@ class AviListDataBase():
                 self.df = self.load_df()
                 verbose_print(f'Database loaded in {datetime.now() - start_time}')
 
-    def load_df(self):
+    def load_df(self) -> pd.DataFrame:
         """Loads the AviList Excel file as a Pandas DataFrame"""
         with resources.files('AviListPy.data').joinpath('AviList-v2025-11Jun-extended.xlsx').open('rb') as f:
             return pd.read_excel(f)
 
-    def _save(self, path=None):
+    def _save(self, path=None) -> None:
         """Pickles the AviListDataBase to the disk"""
         if path is None:
             raise ValueError('Must define path to save AviListDataBase.db to')
