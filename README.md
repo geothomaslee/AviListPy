@@ -1,10 +1,11 @@
 # AviListPy
-`AviListPy` is a Python package for quickly accessing data from the [AviList Global Check List](https://www.avilist.org/checklist/v2025/). AviList is meant to be a single unified data base for bird taxonomy that will be adopted by many different ornithology authorities. Of particular interest to most people is that the Cornell Lab of Ornithology, the team behind eBird and Merlin, have stated [their plans to conform to this checklist](https://ebird.org/news/avilist-a-unified-global-checklist-of-the-worlds-birds-is-now-available) completely by 2026.
-
 <!-- badges: start -->
 [![License:
 CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](https://creativecommons.org/public-domain/cc0/)
 <!-- badges: end -->
+
+`AviListPy` is a Python package for quickly accessing data from the [AviList Global Check List](https://www.avilist.org/checklist/v2025/). AviList is meant to be a single unified data base for bird taxonomy that will be adopted by many different ornithology authorities. Of particular interest to most people is that the Cornell Lab of Ornithology, the team behind eBird and Merlin, have stated [their plans to conform to this checklist](https://ebird.org/news/avilist-a-unified-global-checklist-of-the-worlds-birds-is-now-available) completely by 2026.
+
 ### AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025
 
 ## Installation
