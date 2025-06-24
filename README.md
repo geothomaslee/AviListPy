@@ -19,7 +19,7 @@ CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](https://
 Currently AviListPy is only available on PyPi and must be installed with pip, but I plan to add support for conda-forge in the near future. Fo
 
 #### With Pip
-`pip install pandas, openpyxl, AviListPy`
+`pip install pandas openpyxl AviListPy`
 
 #### With Conda/Mamba
 If you plan to use this in a larger environment, you may want to install AviListPy's dependencies and all other packages with conda/mamba, and then installing AviList without dependencies using pip.
