@@ -7,11 +7,11 @@ Rice University
 Department of Earth, Environmental, and Planetary Sciences
 Email: tl165@rice.edu
 """
+from typing import Any, KeysView, ValuesView, ItemsView, Iterator, List
+from pandas import DataFrame
 
 from AviListPy.taxonomy.family import Family, Genus, Species
 from AviListPy.data.avilistdatabase import AviListDataBase
-from typing import Any, KeysView, ValuesView, ItemsView, Iterator, List
-from pandas import DataFrame
 
 class Order():
     """Container for a Family in the AviList DataBase
@@ -187,6 +187,7 @@ class Order():
         return species_list
 
     def show_families(self) -> None:
+        """Prints basic info about families in this order"""
         print(f'{len(self.families)} family in order {self.name}')
         count = 0
         for family in self.families:
@@ -195,6 +196,7 @@ class Order():
         print(f'{count} total species in {self.name}')
 
     def show_genera(self) -> None:
+        """Prints basic info about genera in this order"""
         print(f'{len(self.genera)} genera in family {self.name}')
         count = 0
         for genus in self.genera:
