@@ -9,7 +9,7 @@ CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](https://
 
 <bold> AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025 </bold>
 
-### AviListPy Features
+## AviListPy Design/Features
 - Lightweight classes for quickly accessing data from the AviList Checklist
 - Data base class built on top of a Pandas DataFrame with convenient to use wrapper functions
   - Once initialized, can be saved and loaded to access the entire data base in a few milliseconds
