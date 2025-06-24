@@ -11,7 +11,7 @@ CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](https://
 
 ## AviListPy Design/Features
 - Lightweight classes for quickly accessing data from the AviList Checklist
-- Data base class built on top of a Pandas DataFrame with convenient to use wrapper functions
+- Data base class built on top of a Pandas DataFrame with convenient methods for data accessibility
   - Once initialized, can be saved and loaded to access the entire data base in a few milliseconds
 - Classes for each taxonomic rank with dictionary-like access to data columns in the AviList CheckList
 
