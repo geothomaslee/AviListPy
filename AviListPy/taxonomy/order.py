@@ -114,7 +114,7 @@ class Order():
         """Returns keys, values in a dictionary.items() like manner"""
         return self._data.items()
 
-    def lookup_order(self, name) -> DataFrame:
+    def lookup_order(self, name: str, exact: bool=False) -> DataFrame:
         """
         Parameters
         ----------
@@ -132,16 +132,19 @@ class Order():
 
         """
         df = self.db.df[self.db.df['Taxon_rank'].str.contains('order')]
-        _family_df = df[df['Scientific_name'].str.contains(name, case=False, na=False)]
-        if _family_df.shape[0] == 0:
+        if exact is True:
+            _order_df = df[df['Scientific_name'] == name]
+        else:
+            _order_df = df[df['Scientific_name'].str.contains(name, case=False, na=False)]
+        if _order_df.shape[0] == 0:
             raise ValueError('No matching families found')
-        if _family_df.shape[0] > 1:
+        if _order_df.shape[0] > 1:
             fail_str = f'{name} could refer to: \n'
-            for _family_ in _family_df['Scientific_name'].to_list():
-                fail_str += (f'{_family_}, ')
+            for _order_ in _order_df['Scientific_name'].to_list():
+                fail_str += (f'{_order_}, ')
             raise ValueError(fail_str)
-        _family_df = _family_df.dropna(axis=1)
-        return _family_df
+        _order_df = _order_df.dropna(axis=1)
+        return _order_df
 
     def find_matching_families(self, load_subspecies: bool=False) -> List[Family]:
         """
