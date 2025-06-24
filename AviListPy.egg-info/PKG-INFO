@@ -1,8 +1,9 @@
 Metadata-Version: 2.4
 Name: AviListPy
-Version: 1.0.4
+Version: 1.0.5
 Summary: Python implementation of the 2025 AviList Global Avian Checklist.
 Author-email: Thomas Lee <tl165@rice.edu>
+Maintainer-email: Thomas Lee <tl165@rice.edu>
 License-Expression: CC0-1.0
 Project-URL: Homepage, https://github.com/geothomaslee/AviListPy/
 Project-URL: Issues, https://github.com/geothomaslee/AviListPy/issues

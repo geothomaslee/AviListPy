@@ -1,0 +1,42 @@
+{% set name = "AviListPy" %}
+{% set version = "1.0.5" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/avilistpy-{{ version }}.tar.gz
+  sha256: 6219a79a39b47c5282f8297dbf414614837f7ad6a6fe8c78efd7e73b58568ae8
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.10
+    - setuptools
+    - pip
+  run:
+    - python >=3.10
+    - pandas >=2.3.0
+    - openpyxl >=3.1.5
+
+test:
+  imports:
+    - AviListPy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  summary: Python implementation of the 2025 AviList Global Avian Checklist.
+  license: CC0-1.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - geothomaslee

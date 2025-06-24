@@ -1,8 +1,11 @@
 [project]
 name = "AviListPy"
-version = "1.0.4"
+version = "1.0.5"
 authors = [
   { name="Thomas Lee", email="tl165@rice.edu" },
+]
+maintainers = [
+  {name = "Thomas Lee", email = "tl165@rice.edu"}
 ]
 description = "Python implementation of the 2025 AviList Global Avian Checklist."
 readme = "README.md"
