@@ -10,11 +10,12 @@ Email: tl165@rice.edu
 AviList Citation:
 AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025
 """
+from typing import Any, KeysView, ValuesView, ItemsView, Iterator, List
+from pandas import DataFrame
 
 from AviListPy.data.avilistdatabase import AviListDataBase
 from AviListPy.taxonomy.genus import Genus, Species
-from typing import Any, KeysView, ValuesView, ItemsView, Iterator, List
-from pandas import DataFrame
+
 
 class Family():
     """Container for a Family in the AviList DataBase
@@ -177,6 +178,7 @@ class Family():
         return species_list
 
     def show_genera(self) -> None:
+        """Prints basic info about genera in this order"""
         print(f'{len(self.genera)} genera in family {self.name}')
         count = 0
         for genus in self.genera:
