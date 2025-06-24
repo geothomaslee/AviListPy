@@ -8,7 +8,8 @@ Department of Earth, Environmental, and Planetary Sciences
 Email: tl165@rice.edu
 
 AviList Citation:
-AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025
+AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025.
+https://doi.org/10.2173/avilist.v2025
 """
 from typing import Any, KeysView, ValuesView, ItemsView, Iterator, List
 from pandas import DataFrame
