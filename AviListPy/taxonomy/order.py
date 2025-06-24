@@ -51,7 +51,8 @@ class Order():
         230
 
     """
-    def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False, db: AviListDataBase=None):
+    def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False,
+                 verbose: bool=False, db: AviListDataBase=None):
         """
         Parameters
         ----------
@@ -64,6 +65,8 @@ class Order():
         load_subspecies: bool, optional
             If True, will load Subspecies objects while loading Species. See
             AviList.taxonomy.species.Species for more information.
+        verbose: bool, optional
+            If True, will output more info about what's being loaded into the console.
         db : AviListDataBase, optional
             AviListDataBase. The default is None.
         """
@@ -146,7 +149,7 @@ class Order():
         _order_df = _order_df.dropna(axis=1)
         return _order_df
 
-    def find_matching_families(self, load_subspecies: bool=False) -> List[Family]:
+    def find_matching_families(self, load_subspecies: bool=False, verbose=False) -> List[Family]:
         """
         Parameters
         ----------
@@ -156,6 +159,8 @@ class Order():
             in the database, and is not case sensitive. The default is False.
         load_subspecies : bool, optional
             If True, loads subspecies. The default is False.
+        verbose: bool, optional
+            If True, outputs more info about what's being loaded into the console
 
         Returns
         -------
@@ -164,12 +169,13 @@ class Order():
         """
         family_df = self.db.df[self.db.df['Taxon_rank'] == 'family']
         matching_family_df = family_df[family_df['Order'] == str(self.name)]
-        print(f'Loading {len(matching_family_df)} families in order {self.name}')
+        if verbose:
+            print(f'Loading {len(matching_family_df)} families in order {self.name}')
         if len(matching_family_df) == 0:
             raise ValueError('No matching families found')
         matching_family_list = []
         for _matching_family_name in matching_family_df['Scientific_name'].to_list():
-            matching_family_list.append(Family(_matching_family_name, db=self.db, exact=True, load_subspecies=load_subspecies))
+            matching_family_list.append(Family(_matching_family_name, db=self.db, exact=True, load_subspecies=load_subspecies, verbose=verbose))
         return matching_family_list
 
     def find_matching_genera(self) -> List[Genus]:

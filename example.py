@@ -27,7 +27,7 @@ print(genus)
 family = Family('Anatidae',db=db,exact=True)
 print(family)
 
-order = Order('Anseriformes',db=db)
+order = Order('Anseriformes',db=db, verbose=False)
 print(order)
 
 

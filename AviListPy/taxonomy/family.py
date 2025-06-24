@@ -56,7 +56,8 @@ class Family():
         'Ducks, Swans, and Geese'
 
     """
-    def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False, db: AviListDataBase=None):
+    def __init__(self, name: str, exact: bool=False, load_subspecies: bool=False,
+                 verbose: bool=False, db: AviListDataBase=None):
         """
         Parameters
         ----------
@@ -69,6 +70,8 @@ class Family():
         load_subspecies: bool, optional
             If True, will load Subspecies objects while loading Species. See
             AviList.taxonomy.species.Species for more information.
+        verbose: bool, optional
+            If True, will output more info about what's being loaded into the console.
         db : AviListDataBase, optional
             AviListDataBase. The default is None.
         """
@@ -80,13 +83,14 @@ class Family():
         self._data = self.df.iloc[0].to_dict()
         self.name = self._data['Scientific_name']
         self.order = self._data['Order']
-        self.genera = self.find_matching_genera(load_subspecies=load_subspecies)
+        self.genera = self.find_matching_genera(load_subspecies=load_subspecies, verbose=verbose)
         self.species = self.find_matching_species()
 
     def __str__(self) -> str:
         return_str = f'{self["Scientific_name"]}'
         num_equals = (80 - len(return_str)) // 2
         return_str = '='*num_equals + return_str + '='*num_equals
+        return_str += f'\n{len(self.species)} species in {len(self.genera)}'
         for key, val in self.items():
             return_str += (f'\n{key}: {val}')
         return return_str + '\n'
@@ -150,11 +154,13 @@ class Family():
         _family_df = _family_df.dropna(axis=1)
         return _family_df
 
-    def find_matching_genera(self, load_subspecies: bool=False) -> List[Genus]:
+    def find_matching_genera(self, load_subspecies: bool=False, verbose: bool=False) -> List[Genus]:
         """
         Parameters
         ----------
+        load_subspecies : bool, ooptional
             If True, loads subspecies. The default is False.
+        verbose: bool, optional
 
         Returns
         -------
@@ -163,7 +169,8 @@ class Family():
         """
         genus_df = self.db.df[self.db.df['Taxon_rank'] == 'genus']
         matching_genus_df = genus_df[genus_df['Family'] == str(self.name)]
-        print(f'Loading {len(matching_genus_df)} genera in family {self.name}')
+        if verbose:
+            print(f'Loading {len(matching_genus_df)} genera in family {self.name}')
         if len(matching_genus_df) == 0:
             raise ValueError('No matching genera found')
         matching_genera_list = []
