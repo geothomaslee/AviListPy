@@ -5,9 +5,15 @@ CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](https://
 [![PyPI Version](https://img.shields.io/pypi/v/AviListPy.svg)](https://pypi.python.org/pypi/AviListPy)
 <!-- badges: end -->
 
-`AviListPy` is a Python package for quickly accessing data from the [AviList Global Check List](https://www.avilist.org/checklist/v2025/). AviList is meant to be a single unified data base for bird taxonomy that will be adopted by many different ornithology authorities. Of particular interest to most people is that the Cornell Lab of Ornithology, the team behind eBird and Merlin, have stated [their plans to conform to this checklist](https://ebird.org/news/avilist-a-unified-global-checklist-of-the-worlds-birds-is-now-available) completely by 2026.
+`AviListPy` is a Python package for quickly accessing data from the [AviList Global Check List](https://www.avilist.org/checklist/v2025/). AviList is meant to be a single unified data base for bird taxonomy that will be adopted by many different ornithology authorities. Of particular interest to the average birder is that the Cornell Lab of Ornithology, the team behind eBird and Merlin, have stated [their plans to conform to this checklist](https://ebird.org/news/avilist-a-unified-global-checklist-of-the-worlds-birds-is-now-available) completely by 2026. 
 
-### AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025
+<bold> AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025 </bold>
+
+### AviListPy Features
+- Lightweight classes for quickly accessing data from the AviList Checklist
+- Data base class built on top of a Pandas DataFrame with convenient to use wrapper functions
+  - Once initialized, can be saved and loaded to access the entire data base in a few milliseconds
+- Classes for each taxonomic rank with dictionary-like access to data columns in the AviList CheckList
 
 ## Installation
 This requires pandas, openpyxl
