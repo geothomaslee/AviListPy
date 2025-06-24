@@ -10,12 +10,13 @@ Email: tl165@rice.edu
 AviList Citation:
 AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi.org/10.2173/avilist.v2025
 """
-
 import os
 from importlib import resources
 from datetime import datetime
 import pickle
 import pandas as pd
+
+from pandas import DataFrame
 
 class AviListDataBase():
     def __init__(self, path: str=None, overwrite_existing=False, verbose=False) -> None:
@@ -59,3 +60,41 @@ class AviListDataBase():
                 pickle.dump(self, file)
         except FileNotFoundError as e:
             raise ValueError(f'FileNotFoundError raised. Likely that the parent directory for your database save location does not exist: \n: {str(e)}')
+
+    def keys(self):
+        """Returns all columns in the data base"""
+        return self.df.columns.tolist()
+
+    def query(self, search, category: str=None, exact: bool=False) -> DataFrame:
+        if exact is True:
+            return_df = self._exact_search(search=search,category=category)
+        else:
+            return_df = self._substring_search(search=search,category=category)
+
+        print(f'Search resulted in {len(return_df)} entries')
+
+        return return_df
+
+    def _exact_search(self, search: str, category: str) -> DataFrame:
+        try:
+            if category is None:
+                return_df = self.df[self.df.isin([search]).any(axis=1)]
+            else:
+                return_df = self.df[self.df[category] == search]
+        except KeyError:
+            raise KeyError(f'Invalid category. Valid categories are {self.keys()}')
+
+        return return_df
+
+    def _substring_search(self, search: str, category: str) -> DataFrame:
+        try:
+            if category is None:
+                df_str = self.df.astype(str)
+                mask = df_str.apply(lambda col: col.str.contains(search, na=False, case=False)).any(axis=1)
+                return_df = self.df[mask]
+            else:
+                return_df = self.df[self.df[category].str.contains(search, case=False, na=False)]
+        except KeyError:
+            raise KeyError(f'Invalid category. Valid categories are {self.keys()}')
+
+        return return_df
