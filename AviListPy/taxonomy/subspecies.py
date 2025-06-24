@@ -12,6 +12,8 @@ AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi
 """
 
 from AviListPy.data.avilistdatabase import AviListDataBase
+from typing import Any, KeysView, ValuesView, ItemsView
+from pandas import DataFrame
 
 class Subspecies():
     """Container for a Subspecies in the AviList DataBase
@@ -69,7 +71,7 @@ class Subspecies():
         self.family = self._data['Family']
         self.genus = self.get_genus()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return_str = f'{self["Scientific_name"]}'
         num_equals = (80 - len(return_str)) // 2
         return_str = '='*num_equals + return_str + '='*num_equals
@@ -77,28 +79,28 @@ class Subspecies():
             return_str += (f'\n{key}: {val}')
         return return_str + '\n'
 
-    def __getitem__(self, key):
+    def __getitem__(self, key) -> Any:
         return self._data[key]
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key, value) -> None:
         self._data[key] = value
 
-    def __contains__(self, key):
+    def __contains__(self, key) -> bool:
         return key in self._data
 
-    def keys(self):
+    def keys(self) -> KeysView:
         """Returns keys in a dictionary.keys() like manner"""
         return self._data.keys()
 
-    def values(self):
+    def values(self) -> ValuesView:
         """Returns values in a dictionary.values() like manner"""
         return self._data.values()
 
-    def items(self):
+    def items(self) -> ItemsView:
         """Returns keys, values in a dictionary.items() like manner"""
         return self._data.items()
 
-    def lookup_subspecies(self, name: str, exact: bool=False):
+    def lookup_subspecies(self, name: str, exact: bool=False) -> DataFrame :
         """
         Parameters
         ----------
@@ -131,6 +133,6 @@ class Subspecies():
         _subspecies_df = _subspecies_df.dropna(axis=1)
         return _subspecies_df
 
-    def get_genus(self):
+    def get_genus(self) -> str:
         """Returns the genus as a string"""
         return self.name.split(' ')[0]

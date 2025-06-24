@@ -8,8 +8,10 @@ Department of Earth, Environmental, and Planetary Sciences
 Email: tl165@rice.edu
 """
 
-from AviListPy.taxonomy.family import Family
+from AviListPy.taxonomy.family import Family, Genus, Species
 from AviListPy.data.avilistdatabase import AviListDataBase
+from typing import Any, KeysView, ValuesView, ItemsView, Iterator, List
+from pandas import DataFrame
 
 class Order():
     """Container for a Family in the AviList DataBase
@@ -76,7 +78,7 @@ class Order():
         self.genera = self.find_matching_genera()
         self.species = self.find_matching_species()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return_str = f'{self.name}'
         num_equals = (80 - len(return_str)) // 2
         return_str = '='*num_equals + return_str + '='*num_equals
@@ -85,28 +87,34 @@ class Order():
             return_str += (f'\n{key}: {val}')
         return return_str + '\n'
 
-    def __getitem__(self, key):
+    def __iter__(self) -> Iterator[Any]:
+        return iter(self.families)
+
+    def __len__(self) -> int:
+        return len(self.families)
+
+    def __getitem__(self, key) -> Any:
         return self._data[key]
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key, value) -> None:
         self._data[key] = value
 
-    def __contains__(self, key):
+    def __contains__(self, key) -> bool:
         return key in self._data
 
-    def keys(self):
+    def keys(self) -> KeysView:
         """Returns keys in a dictionary.keys() like manner"""
         return self._data.keys()
 
-    def values(self):
+    def values(self) -> ValuesView:
         """Returns values in a dictionary.values() like manner"""
         return self._data.values()
 
-    def items(self):
+    def items(self) -> ItemsView:
         """Returns keys, values in a dictionary.items() like manner"""
         return self._data.items()
 
-    def lookup_order(self, name):
+    def lookup_order(self, name) -> DataFrame:
         """
         Parameters
         ----------
@@ -135,7 +143,7 @@ class Order():
         _family_df = _family_df.dropna(axis=1)
         return _family_df
 
-    def find_matching_families(self, load_subspecies: bool=False):
+    def find_matching_families(self, load_subspecies: bool=False) -> List[Family]:
         """
         Parameters
         ----------
@@ -161,19 +169,21 @@ class Order():
             matching_family_list.append(Family(_matching_family_name, db=self.db, exact=True, load_subspecies=load_subspecies))
         return matching_family_list
 
-    def find_matching_genera(self):
+    def find_matching_genera(self) -> List[Genus]:
+        """Returns a list of all genera in this order as Genus objects"""
         genera_list = []
         for family in self.families:
             genera_list += family.genera
         return genera_list
 
-    def find_matching_species(self):
+    def find_matching_species(self) -> List[Species]:
+        """Returns a list of all species in this order as Species objects"""
         species_list = []
         for genus in self.genera:
             species_list += genus.species
         return species_list
 
-    def show_families(self):
+    def show_families(self) -> None:
         print(f'{len(self.families)} family in order {self.name}')
         count = 0
         for family in self.families:
@@ -181,7 +191,7 @@ class Order():
             count += len(family.species)
         print(f'{count} total species in {self.name}')
 
-    def show_genera(self):
+    def show_genera(self) -> None:
         print(f'{len(self.genera)} genera in family {self.name}')
         count = 0
         for genus in self.genera:

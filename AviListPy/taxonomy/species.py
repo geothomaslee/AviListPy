@@ -13,6 +13,8 @@ AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi
 
 from AviListPy.data.avilistdatabase import AviListDataBase
 from AviListPy.taxonomy.subspecies import Subspecies
+from typing import Any, KeysView, ValuesView, ItemsView, List
+from pandas import DataFrame
 
 class Species():
     """Container for a Species in the AviList DataBase
@@ -74,7 +76,7 @@ class Species():
             self.db = AviListDataBase()
         else:
             self.db = db
-        self.df = self.lookup_species_common_name(name, exact=exact)
+        self.df = self.lookup_species(name, exact=exact)
         self._data = self.df.iloc[0].to_dict()
         self.name = self._data['English_name_AviList']
         self.scientific_name = self._data['Scientific_name']
@@ -86,7 +88,7 @@ class Species():
         if load_subspecies is True:
             self.subspecies = self.get_subspecies()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return_str = f'{self["English_name_AviList"]}'
         num_equals = (80 - len(return_str)) // 2
         return_str = '='*num_equals + return_str + '='*num_equals
@@ -96,28 +98,28 @@ class Species():
             return_str += (f'\n{key}: {val}')
         return return_str + '\n'
 
-    def __getitem__(self, key):
+    def __getitem__(self, key) -> Any:
         return self._data[key]
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key, value) -> None:
         self._data[key] = value
 
-    def __contains__(self, key):
+    def __contains__(self, key) -> bool:
         return key in self._data
 
-    def keys(self):
+    def keys(self) -> KeysView:
         """Returns keys in a dictionary.keys() like manner"""
         return self._data.keys()
 
-    def values(self):
+    def values(self) -> ValuesView:
         """Returns values in a dictionary.values() like manner"""
         return self._data.values()
 
-    def items(self):
+    def items(self) -> ItemsView:
         """Returns keys, values in a dictionary.items() like manner"""
         return self._data.items()
 
-    def lookup_species_common_name(self, name: str, exact: bool=False):
+    def lookup_species(self, name: str, exact: bool=False) -> DataFrame:
         """
         Parameters
         ----------
@@ -134,22 +136,44 @@ class Species():
            Pandas DataFrame with only one row containing the entry for the species.
         """
         df = self.db.df
-        if exact is True:
-            _species_df = df[df['English_name_AviList'] == name]
-        else:
-            _species_df = df[df['English_name_AviList'].str.contains(name, case=False, na=False)]
+
+        # First we search for a matching English name
+        try:
+            if exact is True:
+                _species_df = df[df['English_name_AviList'] == name]
+            else:
+                _species_df = df[df['English_name_AviList'].str.contains(name, case=False, na=False)]
+
+            if _species_df.shape[0] == 0:
+                raise ValueError('No matching species found')
+        except ValueError as e:
+            # We only want to search for scientific name if the English name
+            # search doesn't return any results
+            if str(e) == 'No matching species found':
+                # Scientific name will always be a substring of the subspecies
+                # We need to limit our results to only species
+                if exact is True:
+                    _species_df = df[df['Scientific_name'] == name]
+                    _species_df = _species_df[_species_df['Taxon_rank'] == 'species']
+                else:
+                    _species_df = df[df['Scientific_name'].str.contains(name, case=False, na=False)]
+                    _species_df = _species_df[_species_df['Taxon_rank'] == 'species']
 
         if _species_df.shape[0] == 0:
             raise ValueError('No matching species found')
+
         if _species_df.shape[0] > 1:
             fail_str = f'{name} could refer to: \n'
             for _species_ in _species_df['English_name_AviList'].to_list():
                 fail_str += (f'{_species_}, ')
             raise ValueError(fail_str)
+
+        # Drop nan columns
         _species_df = _species_df.dropna(axis=1)
+
         return _species_df
 
-    def get_subspecies(self):
+    def get_subspecies(self) -> List[Subspecies]:
         """Pulls all subspecies for this species and writes them as a list of
         AviList.taxonomy.subspecies.Subspecies objects to Species.subspecies"""
         subspecies_df = self.db.df[self.db.df['Taxon_rank'] == 'subspecies']
@@ -159,11 +183,11 @@ class Species():
             matching_subspecies_list.append(Subspecies(_matching_subspecies_name, db=self.db, exact=True))
         return matching_subspecies_list
 
-    def get_genus(self):
+    def get_genus(self) -> str:
         """Returns the genus of this species as a string"""
         return self.scientific_name.split(' ')[0]
 
-    def brief_summary(self):
+    def brief_summary(self) -> str:
         """Returns a short, easily readable version of info about this species"""
         return_str = f'{self["English_name_AviList"]}'
         num_equals = (80 - len(return_str)) // 2

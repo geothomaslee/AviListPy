@@ -15,7 +15,9 @@ from AviListPy import Species, Genus, Order, Family, AviListDataBase
 
 db = AviListDataBase(path='C:\\thomas\\example_path\\AviListDataBase.db',overwrite_existing=False,verbose=True)
 
-species = Species("Western Cattle Egret", db=db, load_subspecies=True)
+df = db.query('duck',category='English_name_AviList',exact=False)
+
+species = Species("Aechmophorus occidentalis", db=db, load_subspecies=True)
 print(species)
 print(species.brief_summary())
 
@@ -27,4 +29,5 @@ print(family)
 
 order = Order('Anseriformes',db=db)
 print(order)
+
 

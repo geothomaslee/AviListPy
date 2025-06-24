@@ -12,7 +12,9 @@ AviList Core Team. 2025. AviList: The Global Avian Checklist, v2025. https://doi
 """
 
 from AviListPy.data.avilistdatabase import AviListDataBase
-from AviListPy.taxonomy.genus import Genus
+from AviListPy.taxonomy.genus import Genus, Species
+from typing import Any, KeysView, ValuesView, ItemsView, Iterator, List
+from pandas import DataFrame
 
 class Family():
     """Container for a Family in the AviList DataBase
@@ -79,7 +81,7 @@ class Family():
         self.genera = self.find_matching_genera(load_subspecies=load_subspecies)
         self.species = self.find_matching_species()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return_str = f'{self["Scientific_name"]}'
         num_equals = (80 - len(return_str)) // 2
         return_str = '='*num_equals + return_str + '='*num_equals
@@ -87,34 +89,34 @@ class Family():
             return_str += (f'\n{key}: {val}')
         return return_str + '\n'
 
-    def __getitem__(self, key):
-        return self._data[key]
-
-    def __setitem__(self, key, value):
-        self._data[key] = value
-
-    def __contains__(self, key):
-        return key in self._data
-
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Any]:
         return iter(self.genera)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.genera)
 
-    def keys(self):
+    def __getitem__(self, key) -> Any:
+        return self._data[key]
+
+    def __setitem__(self, key, value) -> None:
+        self._data[key] = value
+
+    def __contains__(self, key) -> bool:
+        return key in self._data
+
+    def keys(self) -> KeysView:
         """Returns keys in a dictionary.keys() like manner"""
         return self._data.keys()
 
-    def values(self):
+    def values(self) -> ValuesView:
         """Returns values in a dictionary.values() like manner"""
         return self._data.values()
 
-    def items(self):
+    def items(self) -> ItemsView:
         """Returns keys, values in a dictionary.items() like manner"""
         return self._data.items()
 
-    def lookup_family(self, name, exact: bool=False):
+    def lookup_family(self, name, exact: bool=False) -> DataFrame:
         """
         Parameters
         ----------
@@ -146,7 +148,7 @@ class Family():
         _family_df = _family_df.dropna(axis=1)
         return _family_df
 
-    def find_matching_genera(self, load_subspecies: bool=False):
+    def find_matching_genera(self, load_subspecies: bool=False) -> List[Genus]:
         """
         Parameters
         ----------
@@ -167,13 +169,14 @@ class Family():
             matching_genera_list.append(Genus(_matching_genus_name, db=self.db, exact=True, load_subspecies=load_subspecies))
         return matching_genera_list
 
-    def find_matching_species(self):
+    def find_matching_species(self) -> List[Species]:
+        """Returns a list of all species in this family as Species objects"""
         species_list = []
         for genus in self.genera:
             species_list += genus.species
         return species_list
 
-    def show_genera(self):
+    def show_genera(self) -> None:
         print(f'{len(self.genera)} genera in family {self.name}')
         count = 0
         for genus in self.genera:
