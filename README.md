@@ -22,7 +22,7 @@ Currently AviListPy is only available on PyPi and must be installed with pip, bu
 `pip install AviListPy`
 
 #### With Conda/Mamba
-If you plan to use this in a larger environment, you may want to install AviListPy's dependencies and all other packages with conda/mamba, and then installing AviList without dependencies using pip.
+If you plan to use this in a larger environment, you may want to install AviListPy's dependencies and all other packages with conda/mamba, and then install AviList without dependencies using pip.
 
 `conda create -n AviListPy python=3.12 pandas openpyxl` or
 `mamba create -n AviListPy python=3.12 pandas openpyxl`
