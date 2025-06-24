@@ -170,12 +170,14 @@ class Order():
         return matching_family_list
 
     def find_matching_genera(self) -> List[Genus]:
+        """Returns a list of all genera in this order as Genus objects"""
         genera_list = []
         for family in self.families:
             genera_list += family.genera
         return genera_list
 
     def find_matching_species(self) -> List[Species]:
+        """Returns a list of all species in this order as Species objects"""
         species_list = []
         for genus in self.genera:
             species_list += genus.species

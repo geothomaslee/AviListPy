@@ -170,6 +170,7 @@ class Family():
         return matching_genera_list
 
     def find_matching_species(self) -> List[Species]:
+        """Returns a list of all species in this family as Species objects"""
         species_list = []
         for genus in self.genera:
             species_list += genus.species
